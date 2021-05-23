@@ -11,3 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+**/.idea/workspace.xml
+**/.idea/usage.statistics.xml
+**/.idea/shelf
+**/.idea/*.iml
