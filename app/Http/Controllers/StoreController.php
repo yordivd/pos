@@ -12,7 +12,7 @@ class StoreController extends Controller
 
         if($request->get('filter')){
             $filter = $request->get('filter');
-            $products = $productRepository->getProductsBySku($filter['value']);
+            $products = $productRepository->getProductsById($filter['value']);
         }else {
             $products = $productRepository->getActiveProducts();
         }

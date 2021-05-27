@@ -8,5 +8,9 @@ interface ProductRepositoryContract {
 
     public function getActiveProducts();
 
-    public function getProductsBySku($sku);
+    public function getProductsBySku(string $sku);
+
+    public function getProductsById(int $id);
+
+    public function getProductVariationsByProductId(int $productId);
 }

@@ -17,13 +17,23 @@ class Product implements EntityContract {
     ) {}
 
 
-    public static function fromArray(array $data) : Product{
+    public static function fromWooCommerceApi(object $data) : Product{
+        return new self(...[
+            'id' => $data->id,
+            'name' => $data->name,
+            'type' => $data->type,
+            'price' => (float) $data->price,
+            'category' => ProductCategory::fromWooCommerceApi($data->categories[0])
+        ]);
+    }
+
+    public static function fromElasticSearch(array $data) : Product{
         return new self(...[
             'id' => $data['id'],
             'name' => $data['name'],
             'type' => $data['type'],
-            'price' => $data['price'],
-            'category' => ProductCategory::fromArray((array)$data['categories'][0])
+            'price' => (float) $data['price'],
+            'category' => ProductCategory::fromElasticSearch($data['category'])
         ]);
     }
 

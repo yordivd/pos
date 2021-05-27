@@ -14,13 +14,27 @@ class WooCommerceProductRepository implements ProductRepositoryContract {
 
     public function getActiveProducts(){
 
-        $products = $this->api->get('products',[
-            'status' => 'publish',
-            'stock_status' => 'instock'
-        ]);
+        $page = 1;
+        $products = collect();
+
+        while($page) {
+            $productsFromApi = $this->api->get('products', [
+                'status' => 'publish',
+                'stock_status' => 'instock',
+                'per_page' => 100,
+                'page' => $page
+            ]);
+
+            if(empty($productsFromApi)){
+                $page = false;
+            }else{
+                $products = $products->merge(collect($productsFromApi));
+                $page++;
+            }
+        }
 
         return collect($products)->map(function($product){
-            return Product::fromArray((array)$product);
+            return Product::fromWooCommerceApi($product);
         });
 
     }
@@ -34,7 +48,15 @@ class WooCommerceProductRepository implements ProductRepositoryContract {
         ]);
 
         return collect($products)->map(function($product){
-            return Product::fromArray((array)$product);
+            return Product::fromWooCommerceApi($product);
         });
+    }
+
+    public function getProductsById($id) {
+        // TODO: Implement getProductsById() method.
+    }
+
+    public function getProductVariationsByProductId(int $productId) {
+        // TODO: Implement getProductVariationsByProductId() method.
     }
 }

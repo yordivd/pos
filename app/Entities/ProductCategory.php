@@ -4,7 +4,9 @@
 namespace App\Entities;
 
 
-class ProductCategory {
+use App\Contracts\EntityContract;
+
+class ProductCategory implements EntityContract{
 
 
     public function __construct(
@@ -13,13 +15,17 @@ class ProductCategory {
         public string $slug
     ) {}
 
-    public static function fromArray(array $data) : ProductCategory{
+    public static function fromWooCommerceApi(object $data) : ProductCategory{
 
         return new self(...[
-            'id' => $data['id'],
-            'name' => $data['name'],
-            'slug' => $data['slug']
+            'id' => $data->id,
+            'name' => $data->name,
+            'slug' => $data->slug
         ]);
 
+    }
+
+    public static function fromElasticSearch(array $data): EntityContract {
+        // TODO: Implement fromElasticSearch() method.
     }
 }
