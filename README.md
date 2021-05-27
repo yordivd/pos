@@ -1,3 +1,4 @@
+Just a test repo to mess around with creating a woocommerce pos. :)
 
 ## TODO
 - [x] Basic store page with inertia
